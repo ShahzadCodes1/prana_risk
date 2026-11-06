@@ -1,0 +1,207 @@
+/* ---------- chapter 6: meet seth patel ---------- */
+.founder {
+  position: relative;
+  z-index: 2;
+  overflow-x: clip; /* soft glows bleed visually but never widen the page (sticky still works with clip) */
+  padding: clamp(120px, 20vh, 220px) var(--gutter) clamp(120px, 22vh, 240px);
+}
+.founder-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1fr);
+  gap: clamp(40px, 6vw, 110px);
+  align-items: start;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+/* portrait: layered glass frame with a slow light sheen and a gentle 3D tilt */
+.founder-portrait {
+  position: sticky;
+  top: calc(var(--header-h) + 40px);
+  perspective: 1400px;
+}
+.portrait-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 22px;
+  background: var(--silver);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.9), 0 0 0 10px rgba(255, 255, 255, 0.55), 0 0 0 11px rgba(220, 226, 233, 0.9),
+    0 60px 90px -50px rgba(20, 38, 61, 0.45);
+  transform-style: preserve-3d;
+  transition: transform 0.8s var(--ease-out);
+  will-change: transform;
+}
+.portrait-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  transform: scale(1.06);
+  transition: transform 1.4s var(--ease-out);
+}
+.founder.is-in .portrait-frame img {
+  transform: scale(1);
+}
+.portrait-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.28) 48%, transparent 60%);
+  background-size: 250% 100%;
+  background-position: 120% 0;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+.founder.is-in .portrait-sheen {
+  animation: sheen 2.4s var(--ease) 0.4s both;
+}
+@keyframes sheen {
+  to {
+    background-position: -40% 0;
+  }
+}
+.portrait-badge {
+  position: absolute;
+  right: -18px;
+  bottom: 74px;
+  display: grid;
+  gap: 6px;
+  padding: 18px 20px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 0 0 1px var(--silver), 0 24px 50px -28px rgba(20, 38, 61, 0.4);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  transform: translateZ(40px);
+}
+.portrait-badge b {
+  font: 300 40px/1 var(--font-display);
+  color: var(--navy);
+}
+.portrait-badge span {
+  max-width: 120px;
+  font: 500 10px/1.4 var(--font-display);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+.founder-portrait figcaption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 26px;
+}
+.founder-portrait figcaption b {
+  font: 400 20px/1.2 var(--font-display);
+  color: var(--navy);
+}
+.founder-portrait figcaption span {
+  font: 500 10.5px/1.3 var(--font-display);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--slate);
+  text-align: right;
+}
+
+.founder-copy {
+  position: relative;
+  padding-top: 12px;
+}
+.founder-copy::before {
+  content: '';
+  position: absolute;
+  inset: -80px -100px;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.35) 65%, rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+.founder-copy h2 {
+  font: 300 clamp(30px, 3vw, 48px) / 1.12 var(--font-display);
+  letter-spacing: -0.012em;
+  color: var(--navy);
+  text-wrap: balance;
+}
+.founder-lede {
+  margin-top: 26px;
+  font-size: 16.5px;
+  line-height: 1.75;
+  color: var(--slate);
+}
+.accomplishments {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 32px;
+  margin: 34px 0 40px;
+  list-style: none;
+}
+.accomplishments li {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 10px;
+  padding: 18px 0;
+  border-top: 1px solid var(--silver);
+}
+.acc-n {
+  font: 500 11px/1.9 var(--font-display);
+  letter-spacing: 0.16em;
+  color: var(--slate);
+}
+.accomplishments p {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--navy);
+}
+
+
+/* ---------- tablet / mobile ---------- */
+@media (max-width: 960px) {
+  .founder-inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .founder-portrait {
+    position: relative;
+    top: 0;
+    max-width: 520px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .portrait-badge {
+    right: 14px;
+  }
+}
+@media (max-width: 600px) {
+  .founder {
+    padding-top: 110px;
+  }
+  .portrait-frame img {
+    aspect-ratio: 1 / 1;
+    object-position: 50% 18%;
+  }
+  .portrait-badge {
+    bottom: 64px;
+    padding: 12px 14px;
+  }
+  .portrait-badge b {
+    font-size: 30px;
+  }
+  .founder-lede {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  .accomplishments {
+    grid-template-columns: minmax(0, 1fr);
+    margin: 26px 0 30px;
+  }
+  .accomplishments li {
+    padding: 14px 0;
+  }
+  .accomplishments p {
+    font-size: 14.5px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portrait-frame img {
+    transform: none;
+  }
+}

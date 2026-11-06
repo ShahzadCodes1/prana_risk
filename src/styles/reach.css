@@ -1,0 +1,151 @@
+/* ---------- chapter 7: wall street → across the usa ---------- */
+.reach {
+  position: relative;
+  z-index: 2;
+  height: 380vh;
+}
+.reach-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+.reach-panels {
+  position: absolute;
+  left: var(--gutter);
+  top: 50%;
+  width: min(540px, 40vw);
+  transform: translateY(-50%);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+.reach-panels::before {
+  content: '';
+  position: absolute;
+  inset: -70px -90px;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.42) 62%, rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+.reach-panel {
+  grid-area: 1 / 1;
+  align-self: center;
+  min-width: 0;
+  opacity: 0;
+  visibility: hidden;
+  will-change: opacity, transform;
+}
+.reach-panel h2 {
+  font: 300 clamp(28px, 2.7vw, 44px) / 1.14 var(--font-display);
+  letter-spacing: -0.01em;
+  color: var(--navy);
+  text-wrap: balance;
+}
+.reach-panel p:not(.section-eyebrow):not(.reach-promise) {
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--slate);
+}
+.reach-panel > p:first-child:not(.section-eyebrow) {
+  margin-top: 0;
+}
+.reach-quote {
+  margin: 28px 0 6px;
+  padding-left: 22px;
+  border-left: 1px solid var(--navy);
+}
+.reach-quote p {
+  margin: 0 !important;
+  font: 300 clamp(24px, 2.2vw, 34px) / 1.25 var(--font-display) !important;
+  color: var(--navy) !important;
+}
+.reach-promise {
+  margin-top: 22px;
+  font: 400 19px/1.45 var(--font-display);
+  color: var(--navy);
+}
+.reach-panel .btn {
+  margin-top: 28px;
+}
+
+/* label pinned to the NYC beacon (positioned from the 3D projection) */
+.reach-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px 8px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  font: 500 10.5px/1 var(--font-display);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(20, 38, 61, 0.9);
+  box-shadow: 0 14px 30px -14px rgba(20, 38, 61, 0.6);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+.reach-label i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--blue);
+}
+.no-gl .reach-label {
+  display: none;
+}
+
+@media (max-width: 960px), (max-aspect-ratio: 105/100) {
+  .reach-panels {
+    top: auto;
+    bottom: 56px;
+    right: var(--gutter);
+    width: auto;
+    max-width: 640px;
+    transform: none;
+  }
+}
+@media (max-width: 600px) {
+  .reach-panels {
+    bottom: 40px;
+  }
+  .reach-panel h2 {
+    font-size: clamp(22px, 6.4vw, 28px);
+    line-height: 1.2;
+  }
+  .reach-panel p:not(.section-eyebrow):not(.reach-promise) {
+    margin-top: 14px;
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+  .reach-quote {
+    margin: 18px 0 4px;
+    padding-left: 16px;
+  }
+  .reach-quote p {
+    font-size: 21px !important;
+  }
+  .reach-promise {
+    font-size: 16px;
+  }
+  .reach-panel .btn {
+    margin-top: 18px;
+    height: 44px;
+  }
+  .reach-label {
+    font-size: 9px;
+    letter-spacing: 0.16em;
+  }
+}
+@media (max-width: 1180px) and (min-aspect-ratio: 105/100), (max-height: 820px) and (min-aspect-ratio: 105/100) {
+  .reach-panel p:not(.section-eyebrow):not(.reach-promise) {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}

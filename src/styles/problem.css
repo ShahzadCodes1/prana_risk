@@ -1,0 +1,270 @@
+/* ---------- chapter 3: the insurance problem ---------- */
+.problem {
+  position: relative;
+  z-index: 2;
+  height: 420vh;
+}
+.problem-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+.section-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+  font: 500 11.5px/1 var(--font-display);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+.section-eyebrow::before {
+  content: '';
+  width: 36px;
+  height: 1px;
+  background: var(--navy);
+}
+
+.problem-copy {
+  position: absolute;
+  left: var(--gutter);
+  top: 50%;
+  width: min(560px, 42vw);
+  transform: translateY(-50%);
+  display: grid;
+}
+/* both panels share one grid cell so they cross-fade in place */
+.problem-panel {
+  grid-area: 1 / 1;
+  align-self: center;
+  opacity: 0;
+  visibility: hidden;
+  will-change: opacity, transform;
+}
+.problem-panel h2 {
+  font: 300 clamp(28px, 2.6vw, 42px) / 1.14 var(--font-display);
+  letter-spacing: -0.01em;
+  color: var(--navy);
+  text-wrap: balance;
+}
+.problem-panel p:not(.section-eyebrow) {
+  margin-top: 22px;
+  font-size: 16.5px;
+  line-height: 1.7;
+  color: var(--slate);
+}
+.problem-panel .problem-promise {
+  font: 400 19px/1.45 var(--font-display) !important;
+  color: var(--navy) !important;
+}
+.problem-panel .btn {
+  margin-top: 30px;
+}
+/* soft backing so copy stays crisp over the glass and clouds */
+.problem-copy::before {
+  content: '';
+  position: absolute;
+  inset: -60px -80px;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.45) 60%, rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+
+/* labels projected from the 3D discs */
+.venn-labels span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 7px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+  font: 500 11px/1 var(--font-display);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: inset 0 0 0 1px rgba(220, 226, 233, 0.9);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.venn-labels span.is-lens {
+  color: #fff;
+  background: rgba(20, 38, 61, 0.88);
+  box-shadow: 0 10px 30px -12px rgba(20, 38, 61, 0.6);
+}
+
+/* step indicator: unknown-unknown → known-unknown → known-known */
+.clarity-steps {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: 34px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 260px));
+  gap: 28px;
+  list-style: none;
+}
+.clarity-steps li {
+  position: relative;
+  padding-top: 16px;
+  opacity: 0.4;
+  transition: opacity 0.5s var(--ease);
+}
+.clarity-steps li::before,
+.clarity-steps li::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 1px;
+}
+.clarity-steps li::before {
+  right: 0;
+  background: var(--silver);
+}
+.clarity-steps li::after {
+  width: calc(var(--fill, 0) * 100%);
+  background: var(--navy);
+}
+.clarity-steps li.is-active {
+  opacity: 1;
+}
+.clarity-steps b {
+  display: block;
+  font: 500 11px/1 var(--font-display);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+.clarity-steps span {
+  display: block;
+  margin-top: 9px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--slate);
+}
+
+/* without WebGL: a quiet SVG diagram in place of the glass discs */
+.venn-fallback {
+  display: none;
+}
+.no-gl .venn-fallback {
+  display: block;
+  position: absolute;
+  right: var(--gutter);
+  top: 50%;
+  width: min(520px, 42vw);
+  transform: translateY(-50%);
+}
+.venn-fallback circle {
+  fill: rgba(169, 197, 223, 0.28);
+  stroke: var(--blue);
+  stroke-width: 1.2;
+}
+.venn-fallback text {
+  font: 500 9px var(--font-display);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  fill: var(--slate);
+  text-anchor: middle;
+}
+.venn-fallback text.lens {
+  fill: var(--navy);
+}
+.no-gl .venn-labels {
+  display: none;
+}
+
+/* ---------- portrait / tablet / mobile ---------- */
+@media (max-width: 960px), (max-aspect-ratio: 105/100) {
+  .problem-copy {
+    top: auto;
+    bottom: 120px;
+    right: var(--gutter);
+    width: auto;
+    max-width: 640px;
+    transform: none;
+  }
+  .clarity-steps {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    bottom: 26px;
+  }
+  .clarity-steps span {
+    display: none;
+  }
+  .no-gl .venn-fallback {
+    top: calc(var(--header-h) + 12px);
+    left: 50%;
+    right: auto;
+    width: min(420px, 80vw);
+    transform: translateX(-50%);
+  }
+}
+@media (max-width: 600px) {
+  .problem-copy {
+    bottom: 84px;
+  }
+  .problem-panel h2 {
+    font-size: clamp(21px, 6vw, 26px);
+    line-height: 1.2;
+  }
+  .problem-panel p:not(.section-eyebrow) {
+    margin-top: 14px;
+    font-size: 14.5px;
+    line-height: 1.58;
+  }
+  .problem-panel .problem-promise {
+    font-size: 16px !important;
+  }
+  .problem-panel .btn {
+    margin-top: 18px;
+    height: 44px;
+  }
+  .section-eyebrow {
+    margin-bottom: 14px;
+    font-size: 10px;
+    letter-spacing: 0.26em;
+  }
+  .clarity-steps b {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    line-height: 1.4;
+  }
+  .venn-labels span {
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    padding: 6px 9px;
+  }
+}
+@media (max-width: 600px) and (max-height: 700px) {
+  .problem-panel p:not(.section-eyebrow):not(.problem-promise) {
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+/* compact landscape (small laptops / tablets in landscape) */
+@media (max-width: 1180px) and (min-aspect-ratio: 105/100), (max-height: 820px) and (min-aspect-ratio: 105/100) {
+  .problem-copy {
+    width: min(540px, 48vw);
+    top: calc(50% - 30px);
+  }
+  .problem-panel p:not(.section-eyebrow) {
+    margin-top: 16px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .problem-panel .btn {
+    margin-top: 22px;
+  }
+  .clarity-steps span {
+    display: none;
+  }
+}

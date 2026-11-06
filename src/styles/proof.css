@@ -1,0 +1,330 @@
+/* ---------- chapter 8: proof — stats, google reviews, cta ---------- */
+.proof {
+  position: relative;
+  z-index: 2;
+  overflow-x: clip;
+  padding: clamp(120px, 20vh, 220px) 0 clamp(110px, 18vh, 200px);
+}
+.proof {
+  /* content aligns to a 1320px column; the review track still bleeds to the screen edge */
+  --edge: max(var(--gutter), calc((100vw - 1320px) / 2));
+}
+.proof-head,
+.proof-stats,
+.reviews-controls,
+.proof-cta {
+  margin-left: var(--edge);
+  margin-right: var(--edge);
+}
+.proof-head h2 {
+  max-width: 760px;
+  font: 300 clamp(34px, 4vw, 64px) / 1.06 var(--font-display);
+  letter-spacing: -0.015em;
+  color: var(--navy);
+}
+.proof-head h2 em {
+  font-style: normal;
+  color: var(--slate);
+}
+
+/* stats: four glass tiles, numbers count up on reveal */
+.proof-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 1.4vw, 20px);
+  margin-top: clamp(40px, 6vh, 64px);
+  list-style: none;
+}
+.stat {
+  display: grid;
+  align-content: end;
+  gap: 10px;
+  min-height: 150px;
+  padding: clamp(20px, 2vw, 28px);
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.6));
+  box-shadow: inset 0 0 0 1px rgba(220, 226, 233, 0.95), 0 30px 60px -38px rgba(20, 38, 61, 0.35);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  backdrop-filter: blur(14px) saturate(1.2);
+}
+.stat b {
+  font: 300 clamp(44px, 4.4vw, 68px) / 1 var(--font-display);
+  letter-spacing: -0.02em;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+.stat > span:not(.stars) {
+  font: 500 10.5px/1.4 var(--font-display);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+.stat-badge {
+  background: var(--navy);
+  box-shadow: 0 30px 60px -34px rgba(20, 38, 61, 0.6);
+}
+.stat-badge b {
+  font-size: clamp(30px, 2.6vw, 40px);
+  color: var(--white);
+}
+.stat-badge > span:not(.stars) {
+  color: var(--blue);
+}
+.stat-badge .stars {
+  align-self: start;
+  margin-bottom: auto;
+  color: var(--white);
+}
+
+.stars {
+  display: inline-flex;
+  gap: 3px;
+  color: var(--navy);
+}
+.stars svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+/* reviews: a native scroll-snap track (swipe, trackpad, keyboard), arrows for mouse users */
+.reviews {
+  margin-top: clamp(28px, 4vh, 44px);
+}
+.reviews-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 2 * var(--edge) - 2 * 20px) / 3);
+  gap: 20px;
+  padding: 10px var(--edge) 40px;
+  scroll-padding-inline: var(--edge);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  list-style: none;
+  outline: none;
+}
+.reviews-track::-webkit-scrollbar {
+  display: none;
+}
+.reviews-track:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--blue);
+  border-radius: 20px;
+}
+.cf-card {
+  scroll-snap-align: start;
+  min-width: 0;
+}
+.cf-card figure {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 270px;
+  padding: clamp(24px, 2.2vw, 32px);
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.64));
+  box-shadow: inset 0 0 0 1px rgba(220, 226, 233, 0.95), 0 30px 60px -38px rgba(20, 38, 61, 0.35);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  backdrop-filter: blur(14px) saturate(1.2);
+  transition: transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out);
+}
+.cf-card figure:hover {
+  transform: translateY(-4px);
+  box-shadow: inset 0 0 0 1px var(--blue), 0 40px 70px -38px rgba(20, 38, 61, 0.42);
+}
+.review-mark {
+  position: absolute;
+  top: clamp(24px, 2.2vw, 32px);
+  right: clamp(24px, 2.2vw, 32px);
+  width: 30px;
+  height: 22px;
+  fill: var(--blue);
+  pointer-events: none;
+}
+.cf-card blockquote {
+  flex: 1;
+  margin-top: 18px;
+}
+.cf-card blockquote p {
+  font: 300 clamp(19px, 1.5vw, 23px) / 1.42 var(--font-display);
+  color: var(--navy);
+}
+.cf-card figcaption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px solid var(--silver);
+}
+.review-avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font: 500 13px/1 var(--font-display);
+  letter-spacing: 0.06em;
+  color: var(--navy);
+  background: linear-gradient(140deg, var(--white), var(--silver));
+  box-shadow: inset 0 0 0 1px var(--silver);
+}
+.cf-card figcaption b {
+  display: block;
+  font: 400 15px/1.3 var(--font-display);
+  color: var(--navy);
+}
+.cf-card figcaption small {
+  font: 500 10px/1.6 var(--font-display);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+.reviews-controls {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.reviews-note {
+  font: 500 10.5px/1.4 var(--font-display);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--slate);
+  white-space: nowrap;
+}
+.reviews-progress {
+  flex: 1;
+  height: 1px;
+  background: var(--silver);
+}
+.reviews-progress i {
+  display: block;
+  height: 100%;
+  width: 30%;
+  background: var(--navy);
+  transform-origin: 0 50%;
+  will-change: transform;
+}
+.reviews-arrows {
+  display: flex;
+  gap: 10px;
+}
+.round-btn {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--navy);
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: inset 0 0 0 1px var(--silver);
+  transition: background-color 0.3s var(--ease), box-shadow 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+.round-btn:hover:not(:disabled) {
+  background: var(--white);
+  box-shadow: inset 0 0 0 1px var(--blue);
+}
+.round-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.round-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* cta band (original copy) as a quiet glass strip */
+.proof-cta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) auto;
+  align-items: center;
+  gap: clamp(20px, 3vw, 48px);
+  margin-top: clamp(64px, 10vh, 110px);
+  padding: clamp(28px, 3vw, 44px) clamp(24px, 3vw, 48px);
+  border-radius: 22px;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.92), rgba(233, 239, 245, 0.75));
+  box-shadow: inset 0 0 0 1px rgba(220, 226, 233, 0.95), 0 40px 80px -48px rgba(20, 38, 61, 0.4);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+.proof-cta-title {
+  font: 300 clamp(26px, 2.4vw, 38px) / 1.15 var(--font-display);
+  color: var(--navy);
+  text-wrap: balance;
+}
+.proof-cta p:not(.proof-cta-title) {
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--slate);
+}
+
+
+/* ---------- tablet / mobile ---------- */
+@media (max-width: 1100px) {
+  .reviews-track {
+    grid-auto-columns: calc((100% - 2 * var(--edge) - 20px) / 2);
+  }
+  .proof-cta {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .proof-cta-title {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 900px) {
+  .proof-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  .reviews-track {
+    grid-auto-columns: calc(100% - 2 * var(--edge) - 28px);
+    gap: 14px;
+  }
+  .stat {
+    min-height: 120px;
+    padding: 18px;
+  }
+  .stat b {
+    font-size: 40px;
+  }
+  .stat-badge b {
+    font-size: 26px;
+  }
+  .stat > span:not(.stars) {
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+  }
+  .cf-card figure {
+    min-height: 240px;
+  }
+  .cf-card blockquote p {
+    font-size: 19px;
+  }
+  .reviews-note {
+    display: none;
+  }
+  .proof-cta {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .proof-cta .btn {
+    justify-self: start;
+  }
+}
+@media (max-width: 360px) {
+  .proof-stats {
+    gap: 10px;
+  }
+  .stat {
+    padding: 14px;
+  }
+  .stat b {
+    font-size: 34px;
+  }
+}

@@ -723,6 +723,11 @@ main h3 {
   .hero-thumb { width: 48px; height: 48px; padding: 3px; }
   .hero-word { top: calc(var(--header-h) + 12px); bottom: auto; }
 }
+/* phones: the photo thumbnails are hidden; the hero photos still change on their own */
+@media (max-width: 860px) {
+  .hero-thumbs { display: none !important; }
+  .hero { padding-bottom: 56px !important; }
+}
 @media (max-width: 600px) {
   .prod-grid { grid-template-columns: minmax(0, 1fr); }
   .hero-title { font-size: clamp(30px, 9vw, 44px); }

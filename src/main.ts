@@ -15,6 +15,7 @@ import { initScrollFx } from './ui/scroll-fx';
 import { initFlaps } from './ui/extras';
 import { initProof } from './ui/proof';
 import { initContact } from './ui/contact';
+import { initFinder } from './ui/finder';
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -44,6 +45,7 @@ const fx = initScrollFx({ reducedMotion });
 initFlaps({ reducedMotion });
 initProof({ reducedMotion });
 initContact({ reducedMotion });
+initFinder();
 
 const heroEl = document.getElementById('top')!;
 const headerEl = document.querySelector<HTMLElement>('.site-header')!;
